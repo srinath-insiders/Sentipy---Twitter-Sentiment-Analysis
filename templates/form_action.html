@@ -1,0 +1,72 @@
+ <html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Results for {{name}}-Sentipy</title>
+        <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+        <script src="{{ url_for('static', filename='Chart.js') }}"></script>
+    </head>
+    <body>
+        
+        <div id="container">
+            <div class="title">
+                <h1>Results for {{name}}-Sentipy</h1>
+            </div>
+            <div id="content">
+            <a href="{{ url_for('index') }}"><button>&#8656; Back to Index</button></a><br/>
+            <p>Report for {{name}} on {{option}}</p>
+            <p>The positive counts are : {{pos_count}}
+            &nbsp;&nbsp;&nbsp;&nbsp;The neutral counts are : {{neut_count}}
+            &nbsp;&nbsp;&nbsp;&nbsp;The negative counts are : {{neg_count}}
+           
+            </p>
+            </div>
+            <div id="graph">
+                <canvas id="canvas" height="100" width="150" ></canvas>
+            </div>
+            
+            </div>
+        <div id="container">
+            
+            
+            <div style="float: left; width: 33%;"><div class="title"><h1>Positive Tweets</h1></div>{% for item in pos_tweet %}
+           
+            <p>{{item}}</p>
+          
+            {% endfor %}</div>
+            <div style="float: left; width: 34%;"><div class="title"><h1>Neutral Tweets</h1> </div>{% for item in neut_tweet %}
+           
+            <p>{{item}}</p>
+          
+            {% endfor %}</div>
+            <div style="float: left; width: 33%;"> <div class="title"><h1>Negative tweets</h1></div> {% for item in neg_tweet %}
+            
+            <p>{{item}}</p>
+            
+            {% endfor %}</div>
+            <br style="clear: left;" />
+                     </div>
+         <div id="footer"><footer><p style="text-align:center;">Version 1.0 . This site is designed by sriram &#38; srinath &#169; 2016</p></footer></div>
+       
+    <script>
+    var barChartData = {
+        labels : ["positive","neutral","negative"],
+        datasets : [
+            {
+                fillColor : "rgba(100,150,220,0.7)",
+                strokeColor : "rgba(220,220,255,0.8)",
+                highlightFill: "rgba(100,100,255,0.75)",
+                highlightStroke: "rgba(220,220,255,1)",
+                data : [{{pos_count}},{{neut_count}},{{neg_count}}]
+            }
+        ]
+    }
+    window.onload = function(){
+        var ctx = document.getElementById("canvas").getContext("2d");
+        window.myBar = new Chart(ctx).Bar(barChartData, {
+            responsive : true
+        });
+    }
+    </script>
+    </body>
+</html>
+
